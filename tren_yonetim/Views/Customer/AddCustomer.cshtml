@@ -1,0 +1,34 @@
+﻿
+@model tren_yonetim.Models.Entity.tbl_musteri
+@{
+    ViewBag.Title = "AddCustomer";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+<style>
+
+</style>
+<h2>Yolcu Kayıt</h2>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<br />
+<form class="form-group" method="post" style="width:80%; margin:auto;">
+
+    @Html.Label("Adınız")
+    <br />
+    @Html.TextBoxFor(x => x.yolcuad, new { @class = "form-control" })
+    <br />
+    @Html.Label("Doğum Tarihiniz")
+    <br />
+    @Html.TextBoxFor(x => x.dob, new { @class = "form-control" })
+    <br />
+    @Html.Label("Mail hesabınız")
+    <br />
+    @Html.TextBoxFor(x => x.mail, new { @class = "form-control" })
+    <br />
+    @Html.Label("Şifre")
+    <br />
+    @Html.TextBoxFor(x => x.sifre, new { @class = "form-control" })
+    <br />
+
+    <button class="btn btn-info">Kaydet</button>
+</form>
+

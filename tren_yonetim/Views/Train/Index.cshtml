@@ -1,0 +1,27 @@
+﻿@model List<tren_yonetim.Models.Entity.tbl_tren> 
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<br />
+<table class="table table-bordered" style="width:80%; margin:auto">
+    <tr>
+        <th>Tren Adı</th>
+        <th>Rota Başlangıç</th>
+        <th>Rota Bitiş</th>
+        <th>Rezervasyon Yaptır</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.trenad</td>
+            <td>@item.trenrotabaslangic</td>
+            <td>@item.trenrotabitis</td>
+            <td><a href="/Reservation/AddReservation/@item.trenid" class="btn btn-info">Rezervasyon</a></td>
+        </tr>
+
+    }
+    </table>
+

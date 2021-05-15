@@ -1,0 +1,10 @@
+﻿
+@model tren_yonetim.Models.Entity.tbl_musteri
+
+@Html.Label("Yolcu Listesi")
+<br />
+
+@Html.DropDownListFor(c => c.yolcuad, (IEnumerable<SelectListItem>)ViewData["yolcular"], new { @class = "form-control", @multiple = "multiple"})
+<br />
+
+

@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DbTrenYonetimModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="tbl_musteri">
+    <Key>
+      <PropertyRef Name="musteriid" />
+    </Key>
+    <Property Name="musteriid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="yolcuad" Type="varchar" MaxLength="100" />
+    <Property Name="dob" Type="varchar" MaxLength="50" />
+    <Property Name="mail" Type="varchar" MaxLength="50" />
+    <Property Name="vagonid" Type="int" />
+    <Property Name="sifre" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="tbl_rezervasyon">
+    <Key>
+      <PropertyRef Name="rezid" />
+    </Key>
+    <Property Name="rezid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="rezkisisayisi" Type="int" />
+    <Property Name="musteriid" Type="int" />
+    <Property Name="vagonid" Type="int" />
+    <Property Name="tarih" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="tbl_saatler">
+    <Key>
+      <PropertyRef Name="saatid" />
+    </Key>
+    <Property Name="saatid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="saat" Type="varchar" MaxLength="50" />
+    <Property Name="trenid" Type="int" />
+  </EntityType>
+  <EntityType Name="tbl_tren">
+    <Key>
+      <PropertyRef Name="trenid" />
+    </Key>
+    <Property Name="trenid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="trenad" Type="varchar" MaxLength="50" />
+    <Property Name="trenrotabaslangic" Type="varchar" MaxLength="50" />
+    <Property Name="trenrotabitis" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="tbl_vagon">
+    <Key>
+      <PropertyRef Name="vagonid" />
+    </Key>
+    <Property Name="vagonid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="vagonad" Type="varchar" MaxLength="50" />
+    <Property Name="kapasite" Type="int" />
+    <Property Name="doluluk_orani" Type="int" />
+    <Property Name="trenid" Type="int" />
+  </EntityType>
+  <Association Name="FK_tbl_musteri_tbl_vagon">
+    <End Role="tbl_vagon" Type="Self.tbl_vagon" Multiplicity="0..1" />
+    <End Role="tbl_musteri" Type="Self.tbl_musteri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_vagon">
+        <PropertyRef Name="vagonid" />
+      </Principal>
+      <Dependent Role="tbl_musteri">
+        <PropertyRef Name="vagonid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_rezervasyon_tbl_musteri">
+    <End Role="tbl_musteri" Type="Self.tbl_musteri" Multiplicity="0..1" />
+    <End Role="tbl_rezervasyon" Type="Self.tbl_rezervasyon" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_musteri">
+        <PropertyRef Name="musteriid" />
+      </Principal>
+      <Dependent Role="tbl_rezervasyon">
+        <PropertyRef Name="musteriid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_rezervasyon_tbl_vagon">
+    <End Role="tbl_vagon" Type="Self.tbl_vagon" Multiplicity="0..1" />
+    <End Role="tbl_rezervasyon" Type="Self.tbl_rezervasyon" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_vagon">
+        <PropertyRef Name="vagonid" />
+      </Principal>
+      <Dependent Role="tbl_rezervasyon">
+        <PropertyRef Name="vagonid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_saatler_tbl_tren">
+    <End Role="tbl_tren" Type="Self.tbl_tren" Multiplicity="0..1" />
+    <End Role="tbl_saatler" Type="Self.tbl_saatler" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_tren">
+        <PropertyRef Name="trenid" />
+      </Principal>
+      <Dependent Role="tbl_saatler">
+        <PropertyRef Name="trenid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_vagon_tbl_tren">
+    <End Role="tbl_tren" Type="Self.tbl_tren" Multiplicity="0..1" />
+    <End Role="tbl_vagon" Type="Self.tbl_vagon" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_tren">
+        <PropertyRef Name="trenid" />
+      </Principal>
+      <Dependent Role="tbl_vagon">
+        <PropertyRef Name="trenid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DbTrenYonetimModelStoreContainer">
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_musteri" EntityType="Self.tbl_musteri" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_rezervasyon" EntityType="Self.tbl_rezervasyon" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_saatler" EntityType="Self.tbl_saatler" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_tren" EntityType="Self.tbl_tren" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_vagon" EntityType="Self.tbl_vagon" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_tbl_musteri_tbl_vagon" Association="Self.FK_tbl_musteri_tbl_vagon">
+      <End Role="tbl_vagon" EntitySet="tbl_vagon" />
+      <End Role="tbl_musteri" EntitySet="tbl_musteri" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_rezervasyon_tbl_musteri" Association="Self.FK_tbl_rezervasyon_tbl_musteri">
+      <End Role="tbl_musteri" EntitySet="tbl_musteri" />
+      <End Role="tbl_rezervasyon" EntitySet="tbl_rezervasyon" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_rezervasyon_tbl_vagon" Association="Self.FK_tbl_rezervasyon_tbl_vagon">
+      <End Role="tbl_vagon" EntitySet="tbl_vagon" />
+      <End Role="tbl_rezervasyon" EntitySet="tbl_rezervasyon" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_saatler_tbl_tren" Association="Self.FK_tbl_saatler_tbl_tren">
+      <End Role="tbl_tren" EntitySet="tbl_tren" />
+      <End Role="tbl_saatler" EntitySet="tbl_saatler" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_vagon_tbl_tren" Association="Self.FK_tbl_vagon_tbl_tren">
+      <End Role="tbl_tren" EntitySet="tbl_tren" />
+      <End Role="tbl_vagon" EntitySet="tbl_vagon" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,50 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<link href="~/Content/layout.css" rel="stylesheet" />
+<html>
+<head>
+
+    @{
+        Layout = null;
+    }
+
+    <!DOCTYPE html>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <html>
+    <head>
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid" style="height:50px;">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">Tren Rezervasyon</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li style="margin-right:250px; margin-left:200px;"><a href="/Main/Index/">Ana Sayfa</a></li>
+                    <li style="margin-right:250px;"><a href="/Train/Index/">Trenlerimiz</a></li>
+                    <li style="margin-right:250px;"><a href="/Reservation/Index/">Rezervasyonlarım</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    @if (Session["onay"] == null)
+                    {
+                        <li><a href="/Main/Login/"><span class="glyphicon glyphicon-user"></span>Giriş Yap</a></li>
+                    }
+                    else
+                    {
+
+                        <span style="margin-right:150px; margin-top:10px;" class="nav navbar-nav">@Session["yolcuad"]</span>
+                        <li><a href="/Main/Logout"><span class="glyphicon glyphicon-user"></span>Çıkış Yap</a></li>
+                    }
+
+                </ul>
+            </div>
+        </nav>
+
+</head>
+<body>
+    @RenderBody()
+    @RenderSection("scripts",required:false)
+</body>
+</html>

@@ -1,0 +1,94 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="web-site.css">
+    <title>FIREDS</title>
+    <style>
+        .container {
+            height: 900px;
+            width: 100%;
+            margin: auto;
+            display: grid;
+            gap: 10px;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr 1fr;
+            box-shadow: 10px 10px 8px 10px #888888;
+        }
+
+        .img-container {
+            grid-column-start: 1;
+            grid-column-end: -1;
+            grid-row-start: 1;
+            grid-row-end: 5;
+            background-color: black;
+            background-size: cover;
+            background-image: url('../../tren.jpg');
+        }
+
+        .img {
+            object-fit: cover;
+        }
+
+        .text {
+            position: relative;
+            bottom: 220px;
+            right: 200px;
+            color: lightblue;
+            grid-column-start: 2;
+            grid-column-end: 5;
+        }
+
+        .gallery {
+            grid-column-start: 1;
+            grid-column-end: 2;
+            grid-row-start: 4;
+            grid-row-end: 5;
+            position: relative;
+            top: -3rem;
+            right: -5rem;
+            width: 300px;
+            height: 75px;
+            border-radius: .5rem;
+            background-color: #e6f7ff;
+            color: #000;
+            font-size: 2rem;
+            font-family: 'Times New Roman', Times, serif;
+            transition: 0.3s;
+        }
+
+            .gallery a {
+                text-decoration: none;
+                color: #fff;
+            }
+
+            .gallery:hover {
+                cursor: pointer;
+                background-color: #f7971b;
+                color: white;
+            }
+
+        .logo {
+            width: 3.50%;
+            height: 3.50%;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="img-container"></div>
+        <div class="text"><h1>Tren Rezervasyon sistemi</h1></div>
+
+    </div>
+</body>
+</html>

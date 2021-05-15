@@ -1,0 +1,25 @@
+﻿@model List<tren_yonetim.Models.Entity.tbl_musteri>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+<table class="table table-bordered" style="width:80%; margin:auto">
+    <tr>
+        <th>Tren Adı</th>
+        <th>Rezervasyon Yaptır</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.yolcuad</td>
+            <td>@item.mail</td>
+            <td>@item.dob</td>
+
+            <td></td>
+        </tr>
+
+    }
+</table>

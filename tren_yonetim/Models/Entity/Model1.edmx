@@ -1,0 +1,408 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DbTrenYonetimModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="tbl_musteri">
+          <Key>
+            <PropertyRef Name="musteriid" />
+          </Key>
+          <Property Name="musteriid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="yolcuad" Type="varchar" MaxLength="100" />
+          <Property Name="dob" Type="varchar" MaxLength="50" />
+          <Property Name="mail" Type="varchar" MaxLength="50" />
+          <Property Name="vagonid" Type="int" />
+          <Property Name="sifre" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tbl_rezervasyon">
+          <Key>
+            <PropertyRef Name="rezid" />
+          </Key>
+          <Property Name="rezid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="rezkisisayisi" Type="int" />
+          <Property Name="musteriid" Type="int" />
+          <Property Name="vagonid" Type="int" />
+          <Property Name="tarih" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tbl_saatler">
+          <Key>
+            <PropertyRef Name="saatid" />
+          </Key>
+          <Property Name="saatid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="saat" Type="varchar" MaxLength="50" />
+          <Property Name="trenid" Type="int" />
+        </EntityType>
+        <EntityType Name="tbl_tren">
+          <Key>
+            <PropertyRef Name="trenid" />
+          </Key>
+          <Property Name="trenid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="trenad" Type="varchar" MaxLength="50" />
+          <Property Name="trenrotabaslangic" Type="varchar" MaxLength="50" />
+          <Property Name="trenrotabitis" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tbl_vagon">
+          <Key>
+            <PropertyRef Name="vagonid" />
+          </Key>
+          <Property Name="vagonid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="vagonad" Type="varchar" MaxLength="50" />
+          <Property Name="kapasite" Type="int" />
+          <Property Name="doluluk_orani" Type="int" />
+          <Property Name="trenid" Type="int" />
+        </EntityType>
+        <Association Name="FK_tbl_musteri_tbl_vagon">
+          <End Role="tbl_vagon" Type="Self.tbl_vagon" Multiplicity="0..1" />
+          <End Role="tbl_musteri" Type="Self.tbl_musteri" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_vagon">
+              <PropertyRef Name="vagonid" />
+            </Principal>
+            <Dependent Role="tbl_musteri">
+              <PropertyRef Name="vagonid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_rezervasyon_tbl_musteri">
+          <End Role="tbl_musteri" Type="Self.tbl_musteri" Multiplicity="0..1" />
+          <End Role="tbl_rezervasyon" Type="Self.tbl_rezervasyon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_musteri">
+              <PropertyRef Name="musteriid" />
+            </Principal>
+            <Dependent Role="tbl_rezervasyon">
+              <PropertyRef Name="musteriid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_rezervasyon_tbl_vagon">
+          <End Role="tbl_vagon" Type="Self.tbl_vagon" Multiplicity="0..1" />
+          <End Role="tbl_rezervasyon" Type="Self.tbl_rezervasyon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_vagon">
+              <PropertyRef Name="vagonid" />
+            </Principal>
+            <Dependent Role="tbl_rezervasyon">
+              <PropertyRef Name="vagonid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_saatler_tbl_tren">
+          <End Role="tbl_tren" Type="Self.tbl_tren" Multiplicity="0..1" />
+          <End Role="tbl_saatler" Type="Self.tbl_saatler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_tren">
+              <PropertyRef Name="trenid" />
+            </Principal>
+            <Dependent Role="tbl_saatler">
+              <PropertyRef Name="trenid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_vagon_tbl_tren">
+          <End Role="tbl_tren" Type="Self.tbl_tren" Multiplicity="0..1" />
+          <End Role="tbl_vagon" Type="Self.tbl_vagon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_tren">
+              <PropertyRef Name="trenid" />
+            </Principal>
+            <Dependent Role="tbl_vagon">
+              <PropertyRef Name="trenid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DbTrenYonetimModelStoreContainer">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_musteri" EntityType="Self.tbl_musteri" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_rezervasyon" EntityType="Self.tbl_rezervasyon" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_saatler" EntityType="Self.tbl_saatler" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_tren" EntityType="Self.tbl_tren" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_vagon" EntityType="Self.tbl_vagon" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tbl_musteri_tbl_vagon" Association="Self.FK_tbl_musteri_tbl_vagon">
+            <End Role="tbl_vagon" EntitySet="tbl_vagon" />
+            <End Role="tbl_musteri" EntitySet="tbl_musteri" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_rezervasyon_tbl_musteri" Association="Self.FK_tbl_rezervasyon_tbl_musteri">
+            <End Role="tbl_musteri" EntitySet="tbl_musteri" />
+            <End Role="tbl_rezervasyon" EntitySet="tbl_rezervasyon" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_rezervasyon_tbl_vagon" Association="Self.FK_tbl_rezervasyon_tbl_vagon">
+            <End Role="tbl_vagon" EntitySet="tbl_vagon" />
+            <End Role="tbl_rezervasyon" EntitySet="tbl_rezervasyon" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_saatler_tbl_tren" Association="Self.FK_tbl_saatler_tbl_tren">
+            <End Role="tbl_tren" EntitySet="tbl_tren" />
+            <End Role="tbl_saatler" EntitySet="tbl_saatler" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_vagon_tbl_tren" Association="Self.FK_tbl_vagon_tbl_tren">
+            <End Role="tbl_tren" EntitySet="tbl_tren" />
+            <End Role="tbl_vagon" EntitySet="tbl_vagon" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DbTrenYonetimModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="tbl_musteri">
+          <Key>
+            <PropertyRef Name="musteriid" />
+          </Key>
+          <Property Name="musteriid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="yolcuad" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="dob" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="mail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="vagonid" Type="Int32" />
+          <Property Name="sifre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tbl_vagon" Relationship="Self.FK_tbl_musteri_tbl_vagon" FromRole="tbl_musteri" ToRole="tbl_vagon" />
+          <NavigationProperty Name="tbl_rezervasyon" Relationship="Self.FK_tbl_rezervasyon_tbl_musteri" FromRole="tbl_musteri" ToRole="tbl_rezervasyon" />
+        </EntityType>
+        <EntityType Name="tbl_rezervasyon">
+          <Key>
+            <PropertyRef Name="rezid" />
+          </Key>
+          <Property Name="rezid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="rezkisisayisi" Type="Int32" />
+          <Property Name="musteriid" Type="Int32" />
+          <Property Name="vagonid" Type="Int32" />
+          <Property Name="tarih" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tbl_musteri" Relationship="Self.FK_tbl_rezervasyon_tbl_musteri" FromRole="tbl_rezervasyon" ToRole="tbl_musteri" />
+          <NavigationProperty Name="tbl_vagon" Relationship="Self.FK_tbl_rezervasyon_tbl_vagon" FromRole="tbl_rezervasyon" ToRole="tbl_vagon" />
+        </EntityType>
+        <EntityType Name="tbl_saatler">
+          <Key>
+            <PropertyRef Name="saatid" />
+          </Key>
+          <Property Name="saatid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="saat" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="trenid" Type="Int32" />
+          <NavigationProperty Name="tbl_tren" Relationship="Self.FK_tbl_saatler_tbl_tren" FromRole="tbl_saatler" ToRole="tbl_tren" />
+        </EntityType>
+        <EntityType Name="tbl_tren">
+          <Key>
+            <PropertyRef Name="trenid" />
+          </Key>
+          <Property Name="trenid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="trenad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="trenrotabaslangic" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="trenrotabitis" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tbl_saatler" Relationship="Self.FK_tbl_saatler_tbl_tren" FromRole="tbl_tren" ToRole="tbl_saatler" />
+          <NavigationProperty Name="tbl_vagon" Relationship="Self.FK_tbl_vagon_tbl_tren" FromRole="tbl_tren" ToRole="tbl_vagon" />
+        </EntityType>
+        <EntityType Name="tbl_vagon">
+          <Key>
+            <PropertyRef Name="vagonid" />
+          </Key>
+          <Property Name="vagonid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="vagonad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="kapasite" Type="Int32" />
+          <Property Name="doluluk_orani" Type="Int32" />
+          <Property Name="trenid" Type="Int32" />
+          <NavigationProperty Name="tbl_musteri" Relationship="Self.FK_tbl_musteri_tbl_vagon" FromRole="tbl_vagon" ToRole="tbl_musteri" />
+          <NavigationProperty Name="tbl_rezervasyon" Relationship="Self.FK_tbl_rezervasyon_tbl_vagon" FromRole="tbl_vagon" ToRole="tbl_rezervasyon" />
+          <NavigationProperty Name="tbl_tren" Relationship="Self.FK_tbl_vagon_tbl_tren" FromRole="tbl_vagon" ToRole="tbl_tren" />
+        </EntityType>
+        <Association Name="FK_tbl_musteri_tbl_vagon">
+          <End Role="tbl_vagon" Type="Self.tbl_vagon" Multiplicity="0..1" />
+          <End Role="tbl_musteri" Type="Self.tbl_musteri" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_vagon">
+              <PropertyRef Name="vagonid" />
+            </Principal>
+            <Dependent Role="tbl_musteri">
+              <PropertyRef Name="vagonid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_rezervasyon_tbl_musteri">
+          <End Role="tbl_musteri" Type="Self.tbl_musteri" Multiplicity="0..1" />
+          <End Role="tbl_rezervasyon" Type="Self.tbl_rezervasyon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_musteri">
+              <PropertyRef Name="musteriid" />
+            </Principal>
+            <Dependent Role="tbl_rezervasyon">
+              <PropertyRef Name="musteriid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_rezervasyon_tbl_vagon">
+          <End Role="tbl_vagon" Type="Self.tbl_vagon" Multiplicity="0..1" />
+          <End Role="tbl_rezervasyon" Type="Self.tbl_rezervasyon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_vagon">
+              <PropertyRef Name="vagonid" />
+            </Principal>
+            <Dependent Role="tbl_rezervasyon">
+              <PropertyRef Name="vagonid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_saatler_tbl_tren">
+          <End Role="tbl_tren" Type="Self.tbl_tren" Multiplicity="0..1" />
+          <End Role="tbl_saatler" Type="Self.tbl_saatler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_tren">
+              <PropertyRef Name="trenid" />
+            </Principal>
+            <Dependent Role="tbl_saatler">
+              <PropertyRef Name="trenid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_vagon_tbl_tren">
+          <End Role="tbl_tren" Type="Self.tbl_tren" Multiplicity="0..1" />
+          <End Role="tbl_vagon" Type="Self.tbl_vagon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_tren">
+              <PropertyRef Name="trenid" />
+            </Principal>
+            <Dependent Role="tbl_vagon">
+              <PropertyRef Name="trenid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DbTrenYonetimEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="tbl_musteri" EntityType="Self.tbl_musteri" />
+          <EntitySet Name="tbl_rezervasyon" EntityType="Self.tbl_rezervasyon" />
+          <EntitySet Name="tbl_saatler" EntityType="Self.tbl_saatler" />
+          <EntitySet Name="tbl_tren" EntityType="Self.tbl_tren" />
+          <EntitySet Name="tbl_vagon" EntityType="Self.tbl_vagon" />
+          <AssociationSet Name="FK_tbl_musteri_tbl_vagon" Association="Self.FK_tbl_musteri_tbl_vagon">
+            <End Role="tbl_vagon" EntitySet="tbl_vagon" />
+            <End Role="tbl_musteri" EntitySet="tbl_musteri" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_rezervasyon_tbl_musteri" Association="Self.FK_tbl_rezervasyon_tbl_musteri">
+            <End Role="tbl_musteri" EntitySet="tbl_musteri" />
+            <End Role="tbl_rezervasyon" EntitySet="tbl_rezervasyon" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_rezervasyon_tbl_vagon" Association="Self.FK_tbl_rezervasyon_tbl_vagon">
+            <End Role="tbl_vagon" EntitySet="tbl_vagon" />
+            <End Role="tbl_rezervasyon" EntitySet="tbl_rezervasyon" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_saatler_tbl_tren" Association="Self.FK_tbl_saatler_tbl_tren">
+            <End Role="tbl_tren" EntitySet="tbl_tren" />
+            <End Role="tbl_saatler" EntitySet="tbl_saatler" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_vagon_tbl_tren" Association="Self.FK_tbl_vagon_tbl_tren">
+            <End Role="tbl_tren" EntitySet="tbl_tren" />
+            <End Role="tbl_vagon" EntitySet="tbl_vagon" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DbTrenYonetimModelStoreContainer" CdmEntityContainer="DbTrenYonetimEntities1">
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="DbTrenYonetimModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_musteri">
+            <EntityTypeMapping TypeName="DbTrenYonetimModel.tbl_musteri">
+              <MappingFragment StoreEntitySet="tbl_musteri">
+                <ScalarProperty Name="musteriid" ColumnName="musteriid" />
+                <ScalarProperty Name="yolcuad" ColumnName="yolcuad" />
+                <ScalarProperty Name="dob" ColumnName="dob" />
+                <ScalarProperty Name="mail" ColumnName="mail" />
+                <ScalarProperty Name="vagonid" ColumnName="vagonid" />
+                <ScalarProperty Name="sifre" ColumnName="sifre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_rezervasyon">
+            <EntityTypeMapping TypeName="DbTrenYonetimModel.tbl_rezervasyon">
+              <MappingFragment StoreEntitySet="tbl_rezervasyon">
+                <ScalarProperty Name="rezid" ColumnName="rezid" />
+                <ScalarProperty Name="rezkisisayisi" ColumnName="rezkisisayisi" />
+                <ScalarProperty Name="musteriid" ColumnName="musteriid" />
+                <ScalarProperty Name="vagonid" ColumnName="vagonid" />
+                <ScalarProperty Name="tarih" ColumnName="tarih" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_saatler">
+            <EntityTypeMapping TypeName="DbTrenYonetimModel.tbl_saatler">
+              <MappingFragment StoreEntitySet="tbl_saatler">
+                <ScalarProperty Name="saatid" ColumnName="saatid" />
+                <ScalarProperty Name="saat" ColumnName="saat" />
+                <ScalarProperty Name="trenid" ColumnName="trenid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_tren">
+            <EntityTypeMapping TypeName="DbTrenYonetimModel.tbl_tren">
+              <MappingFragment StoreEntitySet="tbl_tren">
+                <ScalarProperty Name="trenid" ColumnName="trenid" />
+                <ScalarProperty Name="trenad" ColumnName="trenad" />
+                <ScalarProperty Name="trenrotabaslangic" ColumnName="trenrotabaslangic" />
+                <ScalarProperty Name="trenrotabitis" ColumnName="trenrotabitis" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_vagon">
+            <EntityTypeMapping TypeName="DbTrenYonetimModel.tbl_vagon">
+              <MappingFragment StoreEntitySet="tbl_vagon">
+                <ScalarProperty Name="vagonid" ColumnName="vagonid" />
+                <ScalarProperty Name="vagonad" ColumnName="vagonad" />
+                <ScalarProperty Name="kapasite" ColumnName="kapasite" />
+                <ScalarProperty Name="doluluk_orani" ColumnName="doluluk_orani" />
+                <ScalarProperty Name="trenid" ColumnName="trenid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,41 @@
+﻿@model tren_yonetim.Models.Entity.tbl_tren
+
+@{
+    ViewBag.Title = "AddReservation";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<br />
+<form class="form-group" method="post" style="width:80%; margin:auto;">
+
+
+    </div>
+
+    <br />
+    @Html.Label("Adınız")
+    <br />
+    @Html.TextBox("musteriisim", null, new { @class = "form-control" })
+    <h4 style="color:white; color:red;">@ViewBag.Error2</h4>
+    <br />
+    @Html.Action("customerlist")
+    <h4 style="color:white; color:red;">@ViewBag.Error</h4>
+    <br />
+
+    @using (Html.BeginForm("AddReservation", "Reservation", FormMethod.Post, new { id = "TheForm" }))
+    {
+
+        @Html.Label("Vagonlar")
+        <br />
+        @Html.DropDownListFor(c => c.tbl_vagon.FirstOrDefault().vagonad, (IEnumerable<SelectListItem>)ViewData["vagons"], new { @class = "form-control" })
+        <br />
+        @Html.Label("Kalkış Saatleri")
+        <br />
+        @Html.DropDownListFor(c => c.tbl_saatler.FirstOrDefault().saat, (IEnumerable<SelectListItem>)ViewData["saatler"], new { @class = "form-control" })
+        <br />
+
+        <button class="btn btn-info">Kaydet</button>
+    }
+</form>
+
+}
